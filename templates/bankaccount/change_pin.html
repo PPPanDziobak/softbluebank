@@ -1,0 +1,16 @@
+{% extends 'bankaccount/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <h2>Zmiana PIN</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% for error in form.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Zmień PIN</button>
+        </form>
+    </div>
+{% endblock %}
