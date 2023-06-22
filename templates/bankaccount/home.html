@@ -1,0 +1,13 @@
+{% extends 'bankaccount/base.html' %}
+
+{% block content %}
+    <div class="container text-center">
+        <p>Strona główna</p>
+        <div class="my-3">
+            <a class="btn btn-primary btn-lg btn-block" href="{% url 'bankaccount:login' %}">Zaloguj się</a>
+        </div>
+        <div class="my-3">
+            <a class="btn btn-success btn-lg btn-block" href="{% url 'bankaccount:create-account' %}">Stwórz konto</a>
+        </div>
+    </div>
+{% endblock %}

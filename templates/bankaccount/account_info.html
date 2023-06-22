@@ -1,0 +1,21 @@
+{% extends 'bankaccount/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Informacje o Twoim koncie</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Numer konta: {{ account_number }}</p>
+                <p>Stan konta: {{ balance }}</p>
+                <p>Liczba transakcji: {{ account.payments_counter }}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Login: {{ account_owner.username }}</p>
+                <p>Email: {{ account_owner.email }}</p>
+                <p>Telefon: {{ account_owner.phone }}</p>
+                <p>Numer karty kredytowej: {{ credit_card.card_number }}</p>
+                <p>PIN do karty kredytowej: {{ credit_card.pin_number }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

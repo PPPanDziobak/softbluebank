@@ -1,0 +1,7 @@
+{% extends 'bankaccount/base.html' %}
+
+{% block content %}
+  <h2>Wystąpił błąd</h2>
+  <p>Coś poszło nie tak. Przepraszamy za niedogodności.</p>
+  <a href="{% url 'bankaccount:home' %}" class="btn btn-primary">Wróć do strony głównej</a>
+{% endblock %}
