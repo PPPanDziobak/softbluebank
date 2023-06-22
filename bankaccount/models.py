@@ -1,10 +1,10 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-from datetime import datetime, timedelta
 import random
 import string
 import uuid
+from datetime import datetime, timedelta
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class BaseModel(models.Model):
@@ -26,6 +26,15 @@ class BaseModel(models.Model):
                 unique_card_number = card_number
         return unique_card_number
 
+    @classmethod
+    def generate_account_number(cls):
+        unique_account_number = None
+        while not unique_account_number:
+            account_number = ''.join(str(random.randint(0, 9)) for _ in range(10))
+            if not AccountModel.objects.filter(account_number=account_number).exists():
+                unique_account_number = account_number
+        return unique_account_number
+
 
 class AccountOwnerModel(AbstractUser):
     username = models.CharField(u'Nazwa użytkownika', max_length=150, unique=True, default='')
@@ -44,7 +53,7 @@ class CreditCardModel(models.Model):
     card_number = models.CharField('Numer karty', max_length=10, unique=True, default=BaseModel.generate_card_number)
     expiration_date = models.DateField('Data ważności', default=datetime.now() + timedelta(days=5 * 365))
     cvc_number = models.CharField('Numer CVC', max_length=3, default=BaseModel.generate_number(3))
-    payment_amount = models.IntegerField('Kwota transakcji', default=0.00)
+    payment_amount = models.DecimalField('Kwota transakcji', max_digits=100, decimal_places=2, default=0.00)
     payment_date = models.DateField('Data transakcji', auto_now_add=True, blank=True)
     payments_counter = models.IntegerField('Licznik transakcji', default=0)
     pin_number = models.CharField('Kod PIN', max_length=4, default=BaseModel.generate_number(4))
@@ -84,8 +93,7 @@ class AccountModel(models.Model):
     account_owner = models.ForeignKey(AccountOwnerModel, on_delete=models.CASCADE)
     credit_card = models.ForeignKey(CreditCardModel, on_delete=models.CASCADE)
     account_number = models.CharField(
-        u'Numer konta', max_length=10, blank=False, unique=True, default=BaseModel.generate_number(10)
-    )
+        u'Numer konta', max_length=10, blank=False, unique=True, default=BaseModel.generate_account_number)
     balance = models.IntegerField(u'Stan konta')
     transaction_counter = models.IntegerField('Licznik transakcji', default=0)
 

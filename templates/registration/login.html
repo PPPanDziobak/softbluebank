@@ -1,0 +1,22 @@
+{% extends 'bankaccount/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Logowanie</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Nazwa użytkownika:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Hasło:</label>
+                {{ form.password }}
+            </div>
+            {% for error in form.non_field_errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Zaloguj się</button>
+        </form>
+    </div>
+{% endblock %}
