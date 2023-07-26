@@ -83,9 +83,8 @@ class AccountInfoView(LoginRequiredMixin, DetailView):
             context['account_number'] = account.account_number
             context['balance'] = account.balance
             context['credit_card'] = account.credit_card
-
         except AccountModel.DoesNotExist:
-            pass
+            return redirect('bankaccount:error')
 
         return context
 
